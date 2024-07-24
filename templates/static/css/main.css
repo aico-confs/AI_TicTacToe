@@ -1,0 +1,44 @@
+body, html {
+    margin: 0;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+}
+td {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 78px;
+    width: 20%;
+    height: 20%;
+    cursor: pointer;
+}
+td:hover {
+    background-color: rgb(89, 238, 99);
+}
+.beBlue{
+    background-color: lightblue;
+}
+.beRed{
+    background-color: rgb(251, 109, 15);
+}
+.inputBox {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1rem;
+    position: relative;
+}
+.tableBox{
+    height: 100vh;
+}
+input, select {
+    font-size: 1rem;
+    margin-top: 10px;
+}

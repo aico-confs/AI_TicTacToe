@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}" />
+
+
+    <title>{{title}}</title>
+</head>
+<body>
+    <div class="inputBox">
+        <!-- <p id="pageTitle" style="font-size:60px"></p> -->
+        <h1 id="pageTitle"></h1>
+        <!-- <input type="text" id="titleInput" onchange="setMode(this.value)"> -->
+        <!-- <label for="titleInput">主題</label> -->
+        <!-- <label for="titleSelect">選擇新的標題：</label> -->
+        <select id="titleSelect" onchange="setMode(this.value)">
+            <option value="請選擇">請選擇</option>
+            <option value="先手">先手</option>
+            <option value="後手">後手</option>
+            <option value="自由模式">自由模式</option>
+
+        </select>
+    </div>
+    <div class="tableBox">
+        <table border="1">
+            <tr>
+                <td value="1" id="id1"></td>
+                <td value="2" id="id2"></td>
+                <td value="3" id="id3"></td>
+            </tr>
+            <tr>
+                <td value="4" id="id4"></td>
+                <td value="5" id="id5"></td>
+                <td value="6" id="id6"></td>
+            </tr>
+            <tr>
+                <td value="7" id="id7"></td>
+                <td value="8" id="id8"></td>
+                <td value="9" id="id9"></td>
+            </tr>
+
+        </table>
+    </div>
+    <div id="currData" d="{{currData}}" style="display:none"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+
+    
+</body>
+</html>
