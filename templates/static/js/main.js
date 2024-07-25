@@ -123,6 +123,13 @@ function answer(){
                 }
             }
             else {
+
+                if(result.answer){
+                    if (currData.length %2){
+                        cross('#id'+result.answer);
+                    }else{
+                        mark('#id'+result.answer);
+                    }}
                 alert(result.message)
             }
 

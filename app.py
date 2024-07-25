@@ -21,8 +21,15 @@ def calc():
 
         print(currData)
         if check(currData)['finish']: 
+            mode =  { 0:"先手", 1:"後手", }[check(currData)['mode']]
             return  {'message':f'遊戲結束, {mode}獲勝'}  
-        return answer(currData=currData, mode=mode)
+        else:
+            answer_chunk = answer(currData=currData, mode=mode)
+            check_chunk = check(currData + answer_chunk['answer'])
+            if check_chunk['finish']:
+                mode =  { 0:"先手", 1:"後手", }[check_chunk['mode']]
+                return  {'message':f'遊戲結束, {mode}獲勝', 'answer':answer_chunk['answer']} 
+        return answer_chunk
 
     return render_template('index.html', title='33')
 
