@@ -4,14 +4,14 @@ allTds = $("table td");
 function cross(obj){
     $(obj).addClass("beRed");
     $(obj).text("❌");
-    $('#currData').attr('d', $('#currData').attr('d') + $(obj).attr('value'));
+    // $('#currData').attr('d', $('#currData').attr('d') + $(obj).attr('value'));
 
 }
 
 function mark(obj){
     $(obj).addClass("beBlue");
     $(obj).text("✔️");
-    $('#currData').attr('d', $('#currData').attr('d') + $(obj).attr('value'))
+    // $('#currData').attr('d', $('#currData').attr('d') + $(obj).attr('value'))
 }
 
 function setSymbol(){
@@ -43,21 +43,19 @@ function setSymbol(){
     
         });
         return ;
+    // 自由模式結束
     }else{
     $(this).click(function(e) {
-        currData = $('#currData').attr('d');
         value = $('#titleSelect').val();
-        if (value == '先手' && !($(this).hasClass( "beRed" ))&&(currData.length %2 ==0)){
+        if (value == '先手' && !($(this).hasClass( "beRed" ))){
 
             mark(this);
-            answer();
+            answer($(this).attr('value'));
 
-        }else if(value == '後手' && !($(this).hasClass( "beBlue" ))&&(currData.length %2 !=0)){
-
-            
+        }else if(value == '後手' && !($(this).hasClass( "beBlue" ))){
 
             cross(this);
-            answer();
+            answer($(this).attr('value'));
 
         }
     
@@ -78,59 +76,70 @@ function setSymbol(){
 
 
 
-function setMode(value) {
-    document.getElementById('pageTitle').textContent = value;
-    document.getElementById('titleSelect').value = value;
+function setMode(mode) {
+    //
+
+
+
+    // document.getElementById('pageTitle').textContent = mode;
+    // document.getElementById('titleSelect').value = mode;
     
-    document.title = value;
+    // document.title = value;
     allTds.each(function() {
         $(this).text("");
         $(this).removeClass("beRed");
         $(this).removeClass("beBlue");
-        $('#currData').attr('d', '');
+        // $('#currData').attr('d', '');
         $(this).off("click");
         $(this).off("contextmenu");
     });
 
-    setSymbol();
-    if(value == '後手'){
-        answer();
-    }
-}
-
-
-function answer(){
-
-    mode = $('#titleSelect').val();
-
-    let currData = $('#currData').attr('d');
-
-
-    console.log(currData);
     $.ajax({
-        url: "calc", /*資料提交到calc處*/
+        url: "reset_board", /*資料提交到calc處*/
         type: "POST",  /*採用POST方法提交*/
         async:false,
-        data: { "currData": currData, "mode":mode},  /*提交的資料（json格式），從輸入框中獲取*/
+        data: { "mode":mode},  /*提交的資料（json格式），從輸入框中獲取*/
         /*result為后端函式回傳的json*/
         success: function (result) {
             
             if (result.message == "200") {
-                if (currData.length %2){
-                    cross('#id'+result.answer);
-                }else{
-                    mark('#id'+result.answer);
+                // console.log('reset_board');
+                if(mode == '後手'){
+                    answer();
                 }
+            }
+        }
+    });
+    setSymbol();
+}
+
+
+function answer(value){
+
+    mode = $('#titleSelect').val();
+    $.ajax({
+        url: "calc", /*資料提交到calc處*/
+        type: "POST",  /*採用POST方法提交*/
+        async:false,
+        data: { "value": value},  /*提交的資料（json格式），從輸入框中獲取*/
+        /*result為后端函式回傳的json*/
+        success: function (result) {
+            
+            if (result.message == "200") {
+                ;
             }
             else {
 
-                if(result.answer){
-                    if (currData.length %2){
-                        cross('#id'+result.answer);
-                    }else{
-                        mark('#id'+result.answer);
-                    }}
-                alert(result.message)
+                alert(result.message);
+                allTds.each(function() {
+                    $(this).off("click");
+                });
+            }
+
+            if (mode == '先手'){
+                cross('#id'+result.answer);
+            }else{
+                mark('#id'+result.answer);
             }
 
         }
