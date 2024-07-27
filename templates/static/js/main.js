@@ -4,6 +4,7 @@ allTds = $("table td");
 function cross(obj){
     $(obj).addClass("beRed");
     $(obj).text("❌");
+    $(obj).off("click");
     // $('#currData').attr('d', $('#currData').attr('d') + $(obj).attr('value'));
 
 }
@@ -11,6 +12,7 @@ function cross(obj){
 function mark(obj){
     $(obj).addClass("beBlue");
     $(obj).text("✔️");
+    $(obj).off("click");
     // $('#currData').attr('d', $('#currData').attr('d') + $(obj).attr('value'))
 }
 
@@ -74,14 +76,17 @@ function setSymbol(){
 
 
 
-
+function resetGame(){
+    mode = $('#titleSelect').val();
+    setMode(mode);
+}
 
 function setMode(mode) {
     //
 
 
 
-    // document.getElementById('pageTitle').textContent = mode;
+    document.getElementById('pageTitle').textContent = mode;
     // document.getElementById('titleSelect').value = mode;
     
     // document.title = value;
@@ -130,7 +135,9 @@ function answer(value){
             }
             else {
 
-                alert(result.message);
+                // alertify.alert(result.message);  
+                alertify.success(result.message);
+
                 allTds.each(function() {
                     $(this).off("click");
                 });

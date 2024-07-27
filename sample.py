@@ -74,7 +74,10 @@ class QLearningAgent:
     def learn(self, state, action, reward, next_state, done):
         current_q = self.get_q_value(state, action)
         max_next_q = max([self.get_q_value(next_state, a) for a in env.available_actions()], default=0)
-        target_q = reward if done else reward + self.gamma * max_next_q
+        if done: 
+            target_q = reward  
+        else :
+            target_q = -1 * (reward + self.gamma * max_next_q)
         self.q_table[(self.to_tuple(state), action)] = current_q + self.alpha * (target_q - current_q)
 
 # Initialize the agent
@@ -100,17 +103,21 @@ num_episodes = 42000000
 for episode in range(num_episodes):
     state = env.reset().copy()
     done = False
-
+    env.current_player = 1
     while not done:
         available_actions = env.available_actions()
         action = agent.choose_action(state, available_actions)
         next_state, reward, done = env.step(action)
         agent.learn(state, action, reward, next_state, done)
         state = next_state.copy()
-    if episode % 100000 == 0:
+    if episode % 1000000 == 0:
         print(f'{episode}進行存檔')
         with open('config.pkl', 'wb') as f:
             pickle.dump(agent.q_table, f)
+    # assert sum(sum(state)) >= 0
+
+# TODO  如果效果不好，鎖定只有切換到特定玩家才learn
+
 print("Training completed.")
 
 # Save the Q-table to a file

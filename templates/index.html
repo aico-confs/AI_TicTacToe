@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}" />
+    <!-- alertify用 -->  
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/alertify/alertify.core.css')}}" />
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/alertify/alertify.default.css')}}" id="toggleCSS"/>
+
+    <script src="{{url_for('static', filename='js/alertify.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/msg.js')}}"></script>
 
 
     <title>{{title}}</title>
@@ -11,7 +17,7 @@
 <body>
     <div class="inputBox">
         <!-- <p id="pageTitle" style="font-size:60px"></p> -->
-        <h1 id="pageTitle"></h1>
+        <h1 id="pageTitle">請選擇模式</h1>
         <!-- <input type="text" id="titleInput" onchange="setMode(this.value)"> -->
         <!-- <label for="titleInput">主題</label> -->
         <!-- <label for="titleSelect">選擇新的標題：</label> -->
@@ -22,6 +28,7 @@
             <option value="自由模式">自由模式</option>
 
         </select>
+        <button id="resetButton" onclick="resetGame()">重置</button>
     </div>
     <div class="tableBox">
         <table border="1">

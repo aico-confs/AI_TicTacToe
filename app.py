@@ -25,7 +25,7 @@ def reset_board():
 @app.route("/calc", methods=[ "POST"])
 def calc():
     if request.method == "POST":
-        state = env.board
+        state = env.board.copy()
 
         # 從前端拿數據
         if env.current_player == 1:  # Human's turn
@@ -41,22 +41,26 @@ def calc():
             print(f"AI chooses action: {action}")
             
         next_state, reward, done = env.step(action)
+        agent.learn(state, action, reward, next_state, done)
+        # print(agent.get_q_value([[ 0,0,1], [0, 1 , 0], [ 0 , 0 ,-1]], (1, 0)))
+        # for i in agent.q_table:
+        #     if agent.q_table[i] > 0:
+        #         print(agent.q_table[i])
+        #         print(i)
         
+        answer = action[0]*3+action[1] 
         if done:
             print(env.board)
+            if env.current_player == 1 :answer = ''
             if reward == 1:
-                if env.current_player == 1:
-                    winner = "Human"  
-                    answer = ''
-                else:
-                    winner = "AI"
-                    answer = action[0]*3+action[1]
-                return {'message': f"{winner} wins!", "answer":answer}  
+                winner = "玩家"  if env.current_player == 1 else  "AI"
+                return {'message': f"{winner} 贏了!", "answer":answer} 
+             
             elif reward == 0:
-                return {'message': "It's a draw!", "answer":action[0]*3+action[1]}  
-            
+                return {'message': "平手!", "answer":answer}  
+        # 輪到人類玩家
         if env.current_player == 1:
-            return  {'message':"200", "answer":action[0]*3+action[1]}
+            return  {'message':"200", "answer":answer}
         else:
             return   redirect(url_for('calc'),  code=307)
         

@@ -73,7 +73,10 @@ class QLearningAgent:
     def learn(self, state, action, reward, next_state, done):
         current_q = self.get_q_value(state, action)
         max_next_q = max([self.get_q_value(next_state, a) for a in env.available_actions()], default=0)
-        target_q = reward if done else reward + self.gamma * max_next_q
+        if done: 
+            target_q = reward  
+        else :
+            target_q = -1 * (reward + self.gamma * max_next_q)
         self.q_table[(self.to_tuple(state), action)] = current_q + self.alpha * (target_q - current_q)
 
 
