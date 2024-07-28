@@ -73,7 +73,24 @@ function setSymbol(){
 }
 
 
+function save(){
+    $.ajax({
+        url: "save", /*資料提交到calc處*/
+        type: "POST",  /*採用POST方法提交*/
+        async:false,
+        data: { "mode":''},  /*提交的資料（json格式），從輸入框中獲取*/
+        /*result為后端函式回傳的json*/
+        success: function (result) {
+            
+            if (result.message == "200") {
+                console.log('save');
 
+            }else{
+                console.log(result.message);
+            }
+        }
+    });
+}
 
 
 function resetGame(){

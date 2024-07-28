@@ -71,7 +71,24 @@ td:hover {
 #resetButton:active {
     background-color: #3e8e41;
 }
+#saveButton {
+    padding: 10px 20px;
+    background-color: #5fdddf;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
 
+#saveButton:hover {
+    background-color: #66c3c5;
+}
+
+#saveButton:active {
+    background-color: #5fdddf;
+}
 .tableBox{
     height: 100vh;
 }

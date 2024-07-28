@@ -78,7 +78,10 @@ class QLearningAgent:
         else :
             target_q = -1 * (reward + self.gamma * max_next_q)
         self.q_table[(self.to_tuple(state), action)] = current_q + self.alpha * (target_q - current_q)
-
+    def save(self):
+        print('進行學習更新......')
+        with open('config.pkl', 'wb') as f:
+            pickle.dump(self.q_table, f)
 
 # Initialize the environment
 env = TicTacToe()

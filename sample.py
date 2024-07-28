@@ -80,6 +80,11 @@ class QLearningAgent:
             target_q = -1 * (reward + self.gamma * max_next_q)
         self.q_table[(self.to_tuple(state), action)] = current_q + self.alpha * (target_q - current_q)
 
+
+    def save(self):
+        print('進行學習更新......')
+        with open('config.pkl', 'wb') as f:
+            pickle.dump(self.q_table, f)
 # Initialize the agent
 """
 alpha : 每次看到新棋局的學習速度，積分的加減是簡易的線性，因此越小、學的越慢，可以越謹慎
@@ -101,6 +106,7 @@ agent.q_table = loaded_q_table
 num_episodes = 42000000
 
 for episode in range(num_episodes):
+
     state = env.reset().copy()
     done = False
     env.current_player = 1
@@ -111,10 +117,11 @@ for episode in range(num_episodes):
         agent.learn(state, action, reward, next_state, done)
         state = next_state.copy()
     if episode % 1000000 == 0:
-        print(f'{episode}進行存檔')
-        with open('config.pkl', 'wb') as f:
-            pickle.dump(agent.q_table, f)
-    # assert sum(sum(state)) >= 0
+        print(f'累積{episode}')
+        agent.save()
+    # if len(agent.q_table) >  23299:
+    #     agent.save()
+        
 
 # TODO  如果效果不好，鎖定只有切換到特定玩家才learn
 

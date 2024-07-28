@@ -22,6 +22,13 @@ def reset_board():
         return  {'message':'200'}  
     return  {'message':'reset_board error'}  
 
+@app.route("/save", methods=[ "POST"])
+def save():
+    if request.method == "POST":
+        agent.save()
+        return  {'message':'200'}  
+    return  {'message':'save error'} 
+
 @app.route("/calc", methods=[ "POST"])
 def calc():
     if request.method == "POST":
@@ -42,6 +49,7 @@ def calc():
             
         next_state, reward, done = env.step(action)
         agent.learn(state, action, reward, next_state, done)
+        
         # print(agent.get_q_value([[ 0,0,1], [0, 1 , 0], [ 0 , 0 ,-1]], (1, 0)))
         # for i in agent.q_table:
         #     if agent.q_table[i] > 0:
