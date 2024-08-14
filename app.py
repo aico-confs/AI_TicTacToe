@@ -61,6 +61,7 @@ def calc():
             print(env.board)
             if env.current_player == 1 :answer = ''
             if reward == 1:
+                if env.current_player == 1 :agent.save()
                 winner = "玩家"  if env.current_player == 1 else  "AI"
                 return {'message': f"{winner} 贏了!", "answer":answer} 
              
